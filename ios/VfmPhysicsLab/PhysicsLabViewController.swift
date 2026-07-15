@@ -386,10 +386,15 @@ final class PaletteButton: UIButton {
         layer.borderWidth = 0.5
         layer.borderColor = UIColor.lightGray.cgColor
         layer.cornerRadius = 3
-        titleEdgeInsets = UIEdgeInsets(top: 28, left: 0, bottom: 0, right: 0)
     }
 
     required init?(coder: NSCoder) { nil }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        titleLabel?.frame = CGRect(x: 2, y: bounds.height - 24, width: bounds.width - 4, height: 20)
+        titleLabel?.textAlignment = .center
+    }
 
     override func draw(_ rect: CGRect) {
         super.draw(rect)
