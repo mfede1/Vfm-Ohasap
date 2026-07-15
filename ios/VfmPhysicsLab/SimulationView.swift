@@ -581,7 +581,9 @@ final class SimulationView: UIView {
         case .rod:
             let height = max(6, object.realHeight * engine.pixelsPerMeter)
             let rect = CGRect(x: -object.rodLength * 0.5, y: -height * 0.5, width: object.rodLength, height: height)
-            context.draw(rect, using: .fillStroke)
+            context.beginPath()
+            context.addRect(rect)
+            context.drawPath(using: .fillStroke)
             context.fillEllipse(in: CGRect(x: -object.rodLength * 0.5 - 3, y: -3, width: 6, height: 6))
             context.fillEllipse(in: CGRect(x: object.rodLength * 0.5 - 3, y: -3, width: 6, height: 6))
         case .ring:
@@ -610,7 +612,9 @@ final class SimulationView: UIView {
 
     private func drawPolygonOrRect(_ object: PhysicsObject, _ context: CGContext) {
         if object.polygon.isEmpty {
-            context.draw(CGRect(x: -object.size.width * 0.5, y: -object.size.height * 0.5, width: object.size.width, height: object.size.height), using: .fillStroke)
+            context.beginPath()
+            context.addRect(CGRect(x: -object.size.width * 0.5, y: -object.size.height * 0.5, width: object.size.width, height: object.size.height))
+            context.drawPath(using: .fillStroke)
         } else {
             context.beginPath()
             context.move(to: object.polygon[0])

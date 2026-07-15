@@ -400,9 +400,13 @@ final class PaletteButton: UIButton {
         context.setLineWidth(1.5)
         switch kind {
         case .block:
-            context.draw(CGRect(x: center.x - 18, y: center.y - 9, width: 36, height: 18), using: .fillStroke)
+            context.beginPath()
+            context.addRect(CGRect(x: center.x - 18, y: center.y - 9, width: 36, height: 18))
+            context.drawPath(using: .fillStroke)
         case .board:
-            context.draw(CGRect(x: center.x - 22, y: center.y - 3, width: 44, height: 6), using: .fillStroke)
+            context.beginPath()
+            context.addRect(CGRect(x: center.x - 22, y: center.y - 3, width: 44, height: 6))
+            context.drawPath(using: .fillStroke)
         case .spring:
             context.move(to: CGPoint(x: center.x - 22, y: center.y))
             for index in 0..<4 {
