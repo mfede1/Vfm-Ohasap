@@ -1,0 +1,49 @@
+name: Build iOS IPA
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "ios/**"
+      - ".github/workflows/ios-unsigned-ipa.yml"
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show Xcode version
+        run: xcodebuild -version
+      - name: Build application
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project ios/VfmPhysicsLab.xcodeproj \
+            -scheme VfmPhysicsLab \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build/DerivedData \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            build | tee build.log
+      - name: Package unsigned IPA
+        run: |
+          mkdir -p build/Payload
+          cp -R build/DerivedData/Build/Products/Release-iphoneos/VfmPhysicsLab.app build/Payload/
+          cd build
+          ditto -c -k --sequesterRsrc --keepParent Payload VfmPhysicsLab-unsigned.ipa
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: VfmPhysicsLab-unsigned-ipa
+          path: build/VfmPhysicsLab-unsigned.ipa
+          if-no-files-found: error
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: VfmPhysicsLab-build-log
+          path: build.log
+          if-no-files-found: ignore

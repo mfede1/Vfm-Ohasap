@@ -1,0 +1,13 @@
+/build
+/app/build
+/app/*.jks
+/app/*.keystore
+/local.properties
+/.gradle
+/.idea
+/ios/build
+/ios/DerivedData
+**/xcuserdata
+*.xcuserstate
+.DS_Store
+desktop.ini
