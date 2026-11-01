@@ -56,22 +56,29 @@
 
 ## 🔨 构建（Android）
 
-当前 `app/` 收录 Android 端核心源码 `MainActivity.java`（`com.lie.acsm`，约 1.4 万行，物理引擎 + UI 全部集中在一个文件，零第三方依赖）。
+`app/` 收录 Android 端完整源码：核心 `MainActivity.java`（`com.lie.acsm`，约 1.4 万行，物理引擎 + UI 集中于一个文件）+ 自研 `formula` / `keyboard` / `math` 三个功能包 + 配套布局 `res/layout/main.xml`，零第三方库。
 
-> ⚠️ 配套的 `res/layout/main.xml` 暂未收录，自行编译需先补一个布局文件，其中须包含以下控件：
-> `mainArea` / `canvasContainer` / `rightPanelContainer` / `rightToggleBtn`（FrameLayout），
-> `timeLabel`（TextView）、`timeBar`（SeekBar）、
-> `playBtn` / `resetBtn` / `restartBtn` / `btnNormal` / `btnVelocity` / `btnAccel` / `btnDraw` / `btnCut` / `btnErase` / `settingsBtn`（Button）、
-> `tvCutPercent`（TextView），布局文件名需为 `main.xml`。
+快速跑起来：
+
+1. 用 Android Studio 新建 **Empty Views Activity** 工程，语言选 Java，包名设为 `com.lie.acsm`；
+2. 把本仓库 `app/src/main/` 下的 `java/` 与 `res/` 覆盖到工程对应位置；
+3. `minSdk` 建议 24+，直接 Run 即可。
+
 > 完整 Gradle 工程文件后续会补上，欢迎 Issue 催更。
 
 ## 🗂 仓库结构
 
 ```
-├── app/src/main/          # Android 端（Java）
-│   ├── java/com/lie/acsm/MainActivity.java
-│   └── res/               # 应用图标（布局文件待补）
-└── ios/                   # iOS 端（Swift，完整 Xcode 工程）
+├── app/src/main/                # Android 端（Java）
+│   ├── java/com/lie/acsm/
+│   │   ├── MainActivity.java    # 物理引擎 + 主界面
+│   │   ├── formula/             # 公式树 / 渲染 / 光标（11 个类）
+│   │   ├── keyboard/            # 数学符号键盘（4 个类）
+│   │   └── math/                # 根式精确计算（2 个类）
+│   └── res/
+│       ├── layout/main.xml      # 主界面布局
+│       └── drawable-xxhdpi/     # 应用图标
+└── ios/                         # iOS 端（Swift，完整 Xcode 工程）
     └── VfmPhysicsLab/
 ```
 
